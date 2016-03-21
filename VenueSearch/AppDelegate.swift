@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  VenueSearch
 //
-//  Created by Barkin Ozbek on 3/21/16.
+//  Created by Barkin Ozbek on 3/16/16.
 //  Copyright © 2016 Barkin Ozbek. All rights reserved.
 //
 

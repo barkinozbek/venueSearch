@@ -20,10 +20,9 @@ class MapViewController: UIViewController,MKMapViewDelegate {
         
         super.viewDidLoad()
         let initialLocation = CLLocation(latitude: (venue?.latitude)!,longitude: (venue?.longitude)!)
-        print(venue?.placeName)
         centerMapOnLocation(initialLocation)
-        var location = CLLocationCoordinate2DMake((venue?.latitude)!, (venue?.longitude)!)
-        var annotation = MKPointAnnotation()
+        let location = CLLocationCoordinate2DMake((venue?.latitude)!, (venue?.longitude)!)
+        let annotation = MKPointAnnotation()
         annotation.coordinate.longitude = location.longitude
         annotation.coordinate.latitude = location.latitude
         annotation.title = venue?.placeName

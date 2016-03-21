@@ -19,6 +19,7 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
     
     let defaultSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
     var dataTask: NSURLSessionDataTask?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         locationManager.delegate = self
@@ -27,7 +28,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if locations.count != 0 {
-            print(locations.first?.coordinate)
             longitude = locations.first?.coordinate.longitude
             latitude = locations.first?.coordinate.latitude
             ExploreVenue()
@@ -40,7 +40,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
     }
     
     @IBAction func goBackToMain(segue:UIStoryboardSegue) {
-        
     }
 
     func ExploreVenue(){
@@ -49,7 +48,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         }
         let limit: Int
         limit = 20
-        print(latitude)
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         let url = NSURL(string: "https://api.foursquare.com/v2/venues/search?v=20131016&ll=\(latitude!)%2C\(longitude!)&radius=100&limit=\(limit)&intent=browse&client_id=SC5MIONNLNSBW1O0VQBI5JCBUD0WGS2WDACHOBBT35DKBGHS&client_secret=Y2OBXGK2UDICS2ZQ4V0NYGUAKY4M3CVX0C503OJNRX1D2WKP")
         dataTask = defaultSession.dataTaskWithURL(url!) {
@@ -66,7 +64,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
                   self.reloadVenues(data,limit: limit)
                 }
             }
-            
         }
         dataTask?.resume()
     }
@@ -76,13 +73,11 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
             if let data = data, response = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue:0)) as? [String:AnyObject]{
                 result = Mapper<VenueContainer<Venue>>().map(response)
                 tableView.reloadData()
-                
             }else {
                 print("JSON Error")
             }
         }catch let error as NSError {
             print("Error parsing results: \(error.localizedDescription)")
-            
         }
         
     }
@@ -102,7 +97,7 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         if result == nil{
             return 0
         }else{
-        return (result?.venues!.count)!
+            return (result?.venues!.count)!
         }
     }
     override func tableView(tableView: UITableView,  cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -110,6 +105,7 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         let venue: Venue
         venue = (result?.venues![indexPath.row])!
         cell.textLabel!.text = venue.placeName
+        cell.detailTextLabel!.text = ""
         return cell
     }
 
