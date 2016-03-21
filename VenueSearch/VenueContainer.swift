@@ -2,8 +2,7 @@
 //  VenueContainer.swift
 //  MyApp
 //
-//  Created by Orkun Ozbek on 3/19/16.
-//  Copyright © 2016 Barkin Ozbek. All rights reserved.
+//  Created by Barkin Ozbek on 3/19/16.
 //
 
 import Foundation

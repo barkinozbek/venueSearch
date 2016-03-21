@@ -14,8 +14,7 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
     var count: Int = 0
     var longitude: Double? = 29.066357
     var latitude: Double? = 40.977156
-    //42.3447814,-71.0970766
-    //29.066357,40.977156
+    var result: VenueContainer<Venue>?
     var locationManager = CLLocationManager()
     
     let defaultSession = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
@@ -35,9 +34,11 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
             
         }
     }
+    
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print(error.localizedDescription)
     }
+    
     @IBAction func goBackToMain(segue:UIStoryboardSegue) {
         
     }
@@ -46,7 +47,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         if dataTask != nil {
             dataTask?.cancel()
         }
-        //make it to get from user /////
         let limit: Int
         limit = 20
         print(latitude)
@@ -70,7 +70,7 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         }
         dataTask?.resume()
     }
-    var result: VenueContainer<Venue>?
+    
     func reloadVenues(data: NSData?,limit: Int?){
         do{
             if let data = data, response = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue:0)) as? [String:AnyObject]{
@@ -96,7 +96,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -111,7 +110,6 @@ class VenueTableViewController: UITableViewController,CLLocationManagerDelegate 
         let venue: Venue
         venue = (result?.venues![indexPath.row])!
         cell.textLabel!.text = venue.placeName
-        // #warning Incomplete implementation, return the number of rows
         return cell
     }
 
